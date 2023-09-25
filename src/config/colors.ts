@@ -6,4 +6,5 @@ export const colors = {
     title: '#1E1E1E',
     text: '#7A7B7E',
     border: '#D6E1E8',
+    green: '#7CAA7C'
 }

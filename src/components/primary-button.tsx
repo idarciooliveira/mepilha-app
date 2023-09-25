@@ -20,7 +20,7 @@ export default function PrimaryButton({ title, onPress, customStyles }: Props) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: 50,
+        height: 45,
         backgroundColor: colors.primary,
         borderRadius: 5,
         alignItems: 'center',

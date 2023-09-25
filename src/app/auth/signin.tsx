@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { colors } from '../../config/colors'
 import Screen from '../../components/screen'
 import InputText from '../../components/inputs/inputText'
-import PrimaryButton from '../../components/primaryButton'
+import PrimaryButton from '../../components/primary-button'
 import { router } from 'expo-router'
 
 export default function Signin() {

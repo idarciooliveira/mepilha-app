@@ -9,7 +9,7 @@ import { router } from 'expo-router'
 
 import { colors } from '../../config/colors'
 import InputText from '../../components/inputs/inputText'
-import PrimaryButton from '../../components/primaryButton'
+import PrimaryButton from '../../components/primary-button'
 import Screen from '../../components/screen'
 
 export default function Register() {
@@ -26,7 +26,7 @@ export default function Register() {
                 showsVerticalScrollIndicator={false}>
                 <Text style={styles.title}>Criar conta</Text>
                 <Text style={styles.subtitle}>
-                    Junte-se a maior comunidade de financiamento coletivo da Huiíla {'\n'}e comece a mudar vidas
+                    Junte-se a maior comunidade de financiamento coletivo da Huíla {'\n'}e comece a mudar vidas
                 </Text>
 
                 <Text style={styles.label}>Nome</Text>
