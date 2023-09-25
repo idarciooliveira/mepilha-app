@@ -3,6 +3,7 @@
     "name": "expo-starter",
     "slug": "expo-starter",
     "version": "1.0.0",
+    "scheme": "mepilha-app",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -26,7 +27,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "your-app-scheme",
     "plugins": [
       "expo-router"
     ]
