@@ -8,7 +8,7 @@ export default function Layout() {
         <>
             <StatusBar backgroundColor={colors.background} />
             <Stack screenOptions={{
-                headerShown: false
+                headerShown: false,
             }}>
                 <Stack.Screen name="welcome/index" options={{
                     headerShown: false

@@ -8,7 +8,7 @@ import {
 import { router } from 'expo-router'
 
 import { colors } from '../../config/colors'
-import InputText from '../../components/inputs/inputText'
+import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
 import Screen from '../../components/screen'
 

@@ -2,7 +2,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { colors } from '../../config/colors'
 import Screen from '../../components/screen'
-import InputText from '../../components/inputs/inputText'
+import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
 import { router } from 'expo-router'
 

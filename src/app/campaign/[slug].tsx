@@ -1,15 +1,29 @@
 
 
+import { router } from 'expo-router'
 import { ScrollView, StyleSheet, View, Text, Image } from 'react-native'
+import { useState } from 'react'
+import Header from '../../components/header'
 import Screen from '../../components/screen'
 import CampaignCard from '../../components/campaign-card'
 import PrimaryButton from '../../components/primary-button'
-import { router } from 'expo-router'
+import PaymentModal from '../../components/payment-modal'
 
 
 export default function CampaignDetail() {
+
+    const [showModal, setShowModal] = useState(false)
+
+    function handleOnModalPress() {
+        setShowModal(!showModal)
+    }
+
     return (
         <Screen>
+            <Header
+                title='Detalhe da Campanha'
+                handleGoBack={() => router.back()}
+            />
             <ScrollView style={styles.container}>
                 <CampaignCard
                     id={'1'}
@@ -30,7 +44,7 @@ export default function CampaignDetail() {
                         </View>
                         <PrimaryButton
                             title='Apoiar Campanhas'
-                            onPress={() => router.push('/payments/checkout')}
+                            onPress={handleOnModalPress}
                         />
                     </>
                 </CampaignCard>
@@ -52,6 +66,11 @@ export default function CampaignDetail() {
                 </ScrollView>
 
             </ScrollView>
+
+            <PaymentModal
+                handleClose={handleOnModalPress}
+                showModal={showModal}
+            />
         </Screen>
     )
 }

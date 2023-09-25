@@ -4,12 +4,13 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 
 import { colors } from '../../config/colors'
 import Screen from '../../components/screen'
-import InputText from '../../components/inputs/inputText'
+import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
+import Header from '../../components/header'
 
 export default function NewCampaign() {
 
@@ -17,14 +18,14 @@ export default function NewCampaign() {
 
     return (
         <Screen>
+            <Header
+                title='Criar Nova Campanha'
+                handleGoBack={() => router.back()}
+            />
             <ScrollView
                 contentContainerStyle={styles.container}
                 showsVerticalScrollIndicator={false}
             >
-                <Text style={styles.title}>
-                    Criar Nova Campanha
-                </Text>
-
                 <Text style={styles.subtitle}>
                     Adicione os dados importantes, imagens e o conceito a ser informado
                 </Text>
