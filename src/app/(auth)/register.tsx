@@ -5,7 +5,6 @@ import {
     StyleSheet,
     TouchableOpacity,
 } from 'react-native'
-import { router } from 'expo-router'
 
 import { colors } from '../../config/colors'
 import InputText from '../../components/inputs/input-text'
@@ -16,7 +15,7 @@ export default function Register() {
 
     async function handleOnCreateNewAccount() { }
     async function handleOnSignIn() {
-        router.back()
+
     }
 
     return (

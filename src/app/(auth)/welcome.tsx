@@ -1,13 +1,12 @@
 import { Text, Image, StyleSheet } from 'react-native'
 import OnBoarding from 'react-native-onboarding-swiper'
-import { router } from 'expo-router'
 import Screen from '../../components/screen'
 
 export default function Welcome() {
     return (
         <Screen>
             <OnBoarding
-                onDone={() => router.replace('/auth/signin')}
+                onDone={() => { }}
                 controlStatusBar={false}
                 containerStyles={{ flex: 1 }}
                 showSkip={false}

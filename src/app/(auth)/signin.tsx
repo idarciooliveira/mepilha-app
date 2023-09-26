@@ -4,15 +4,14 @@ import { colors } from '../../config/colors'
 import Screen from '../../components/screen'
 import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
-import { router } from 'expo-router'
 
 export default function Signin() {
 
     async function handleOnSignIn() {
-        router.push('/home')
+
     }
     async function handleCreateNewAccount() {
-        router.push('/auth/register')
+
     }
 
     return (

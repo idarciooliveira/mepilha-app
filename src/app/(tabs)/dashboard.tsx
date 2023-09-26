@@ -5,7 +5,6 @@ import CampaignCard from '../../components/campaign-card'
 import CampaignOverviewCard from '../../components/campaign-overview-card'
 import { FloatingAction, IActionProps } from "react-native-floating-action";
 import MaterialIcon from '@expo/vector-icons/MaterialIcons'
-import { router } from 'expo-router';
 
 const actions: IActionProps[] = [
     {
@@ -18,10 +17,10 @@ const actions: IActionProps[] = [
 export default function Dashboard() {
 
     function handleOnNewCampaign() {
-        router.push('/campaign/newCampaign')
+        // router.push('/campaign/newCampaign')
     }
     function handleOnPressCard() {
-        router.push(`/campaign/1092`)
+        // router.push(`/campaign/1092`)
     }
 
     return (

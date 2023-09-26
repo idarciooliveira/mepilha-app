@@ -4,13 +4,13 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import { Link, router } from 'expo-router'
 
 import { colors } from '../../config/colors'
 import Screen from '../../components/screen'
 import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
 import Header from '../../components/header'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function NewCampaign() {
 
@@ -20,7 +20,7 @@ export default function NewCampaign() {
         <Screen>
             <Header
                 title='Criar Nova Campanha'
-                handleGoBack={() => router.back()}
+                handleGoBack={() => { }}
             />
             <ScrollView
                 contentContainerStyle={styles.container}
@@ -51,15 +51,15 @@ export default function NewCampaign() {
 
                 <PrimaryButton title='Criar conta' onPress={handleOnCreateNewAccount} />
 
-                <Link href={'/(tabs)/dashboard'}
+                <TouchableOpacity
                     style={{
-                        textAlign: 'center',
+                        alignItems: 'center',
                         marginTop: 8
                     }} >
                     <Text style={styles.label}>
                         Cancelar
                     </Text>
-                </Link>
+                </TouchableOpacity>
 
                 <View style={{ marginTop: 20, marginBottom: 20 }} />
 

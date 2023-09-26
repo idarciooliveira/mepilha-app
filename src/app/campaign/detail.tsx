@@ -1,13 +1,11 @@
 
-
-import { router } from 'expo-router'
 import { ScrollView, StyleSheet, View, Text, Image } from 'react-native'
 import { useState } from 'react'
 import Header from '../../components/header'
+import PaymentModal from '../../components/payment-modal'
 import Screen from '../../components/screen'
 import CampaignCard from '../../components/campaign-card'
 import PrimaryButton from '../../components/primary-button'
-import PaymentModal from '../../components/payment-modal'
 
 
 export default function CampaignDetail() {
@@ -22,7 +20,7 @@ export default function CampaignDetail() {
         <Screen>
             <Header
                 title='Detalhe da Campanha'
-                handleGoBack={() => router.back()}
+                handleGoBack={() => { }}
             />
             <ScrollView style={styles.container}>
                 <CampaignCard

@@ -2,12 +2,11 @@ import { StyleSheet, ScrollView } from 'react-native'
 import { colors } from '../../config/colors'
 import InputText from '../../components/inputs/input-text'
 import CampaignCard from '../../components/campaign-card'
-import { router } from 'expo-router'
 
 export default function Campaigns() {
 
     function handleOnPressCard() {
-        router.push(`/campaign/1092`)
+        // router.push(`/campaign/1092`)
     }
 
     return (
