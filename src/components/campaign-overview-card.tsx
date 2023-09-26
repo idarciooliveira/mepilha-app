@@ -1,10 +1,16 @@
 
 
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { colors } from '../config/colors'
-import Separator from './separator'
+import { useAuth } from '../hooks/useAuth'
+import transaction from '../services/transaction'
 
 export default function CampaignOverviewCard() {
+
+    const { user } = useAuth()
+
+    const { amount } = transaction.getUserTotalGained(user?.id ?? '')
+
     return (
         <View style={styles.card}>
             <View style={styles.cardContainer}>
@@ -12,15 +18,15 @@ export default function CampaignOverviewCard() {
                     Total Arrecadado
                 </Text>
                 <Text style={styles.text}>
-                    1.000.000.000
+                    {amount ? amount : 0} AOA
                 </Text>
             </View>
-            <Separator />
+            {/* <Separator />
             <TouchableOpacity style={styles.button}>
                 <Text style={styles.text}>
                     Retirar fundo
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     )
 }

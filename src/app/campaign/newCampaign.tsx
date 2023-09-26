@@ -3,6 +3,7 @@ import {
     View,
     ScrollView,
     StyleSheet,
+    TouchableOpacity
 } from 'react-native'
 
 import { colors } from '../../config/colors'
@@ -10,7 +11,6 @@ import Screen from '../../components/screen'
 import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
 import Header from '../../components/header'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 export default function NewCampaign() {
 

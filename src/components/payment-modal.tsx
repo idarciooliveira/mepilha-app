@@ -1,23 +1,76 @@
 
 
-import { StyleSheet, Text, View, Modal } from 'react-native'
+import { StyleSheet, Text, View, Modal, Keyboard } from 'react-native'
 import MaterialIcon from '@expo/vector-icons/MaterialIcons'
 import InputText from './inputs/input-text'
 import { colors } from '../config/colors'
 import PrimaryButton from './primary-button'
+import { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useAuth } from '../hooks/useAuth'
+import ActivityIndicator from './activity-indicator'
+import notify from '../config/notify'
+import transaction from '../services/transaction'
 
 type Props = {
+    campaignId: string
+    campaignName: string
     showModal: boolean
+    navigation: any
     handleClose: () => void
 }
 
-export default function PaymentModal({ showModal, handleClose }: Props) {
+type FormData = {
+    amount: string
+}
+
+export default function PaymentModal({
+    showModal,
+    handleClose,
+    campaignId,
+    campaignName,
+    navigation
+}: Props) {
+
+    const { user } = useAuth()
+    const [loading, setLoading] = useState(false)
+
+    const { control, handleSubmit, reset, watch } = useForm<FormData>();
+
+    async function handleOnSubmit({ amount }: FormData) {
+        try {
+            console.log('pressed!')
+            Keyboard.dismiss()
+            setLoading(true)
+            const response = await transaction.createTransaction({
+                amount: Number(amount),
+                userId: user?.id ?? '',
+                campaignId
+            })
+            setLoading(false)
+
+            if (!response.ok) return notify.Error({ message: 'Não foi possível processar o pagamento, verifique a sua internet' })
+            reset()
+            handleClose()
+            navigation.replace('payment_sucess', {
+                name: user?.name,
+                amount,
+                campaignName
+            })
+
+        } catch (error) {
+            setLoading(false)
+        }
+    }
+
+
     return (
         <Modal
             visible={showModal}
             animationType='slide'
             transparent={true}
         >
+            <ActivityIndicator visible={loading} />
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View />
@@ -35,10 +88,16 @@ export default function PaymentModal({ showModal, handleClose }: Props) {
 
                 <View style={styles.form}>
                     <Text style={styles.label}>Montante</Text>
-                    <InputText
-                        keyboardType='numeric'
-                        autoCapitalize='none'
-                    />
+                    <Controller control={control} rules={{ required: true }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <InputText
+                                value={value}
+                                keyboardType='number-pad'
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+
+                            />
+                        )} name='amount' />
 
                     <View style={{
                         flexDirection: 'row',
@@ -57,14 +116,14 @@ export default function PaymentModal({ showModal, handleClose }: Props) {
                             color: '#364C6F',
                             fontWeight: '500'
                         }}>
-                            1.000.000,00 AOA
+                            {watch('amount')}
                         </Text>
                     </View>
                     <View style={styles.div} />
 
                     <PrimaryButton
                         title='Finalizar pagamento'
-                        onPress={() => { }}
+                        onPress={handleSubmit(handleOnSubmit)}
                     />
                 </View>
 

@@ -27,8 +27,8 @@ export default function AppNavigator({ firstLaunch }: Props) {
                 </>
             }
 
-            <Stack.Screen name="signin" component={Signin} />
             <Stack.Screen name="hometabs" component={HomeTabsNavigator} />
+            <Stack.Screen name="signin" component={Signin} />
             <Stack.Screen name="register" component={Register} />
 
             <Stack.Screen name="newCampaign" component={NewCampaign} />

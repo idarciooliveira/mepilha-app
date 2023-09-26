@@ -5,7 +5,10 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import { colors } from '../../config/colors'
 import PrimaryButton from '../../components/primary-button'
 
-export default function Sucess() {
+export default function Sucess({ route, navigation }: any) {
+
+    const { name, amount, campaignName } = route.params
+
     return (
         <Screen styles={styles.container}>
             <Image
@@ -13,22 +16,22 @@ export default function Sucess() {
                 source={require('../../assets/sucess.png')}
             />
             <Text style={styles.text}>
-                Oliveira! você apoiou a campanha com
+                {name} ! você apoiou a campanha com
             </Text>
 
             <Text style={styles.text}>
-                85.000 AOA
+                {amount} AOA
             </Text>
 
             <View style={styles.buttonContainer}>
                 <Text style={styles.buttonText}>
-                    Cesta basica para o Orfanato Criança Feliz
+                    {campaignName}
                 </Text>
             </View>
 
             <PrimaryButton
                 title='CONTINUAR'
-                onPress={() => { }}
+                onPress={() => navigation.replace('hometabs')}
             />
         </Screen>
     )

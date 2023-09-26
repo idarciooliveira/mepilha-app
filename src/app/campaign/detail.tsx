@@ -6,9 +6,15 @@ import PaymentModal from '../../components/payment-modal'
 import Screen from '../../components/screen'
 import CampaignCard from '../../components/campaign-card'
 import PrimaryButton from '../../components/primary-button'
+import campaign from '../../services/campaign'
+import ActivityIndicator from '../../components/activity-indicator'
 
 
-export default function CampaignDetail() {
+export default function CampaignDetail({ route, navigation }: any) {
+
+    const { id } = route.params
+
+    const { campaigns, isLoading, error } = campaign.getCampaignById(id)
 
     const [showModal, setShowModal] = useState(false)
 
@@ -16,56 +22,67 @@ export default function CampaignDetail() {
         setShowModal(!showModal)
     }
 
+    if (error) return (<Text>Ocoreu um erro de internet</Text>)
+
     return (
         <Screen>
             <Header
                 title='Detalhe da Campanha'
-                handleGoBack={() => { }}
+                handleGoBack={() => navigation.goBack()}
             />
             <ScrollView style={styles.container}>
-                <CampaignCard
-                    id={'1'}
-                    name='Material de estudo para Orfanato Criança Feliz'
-                    image={require('../../assets/onboarding01-min.jpg')}
-                    currentAmount={80}
-                    goalAmount={100}
-                    content={'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi amet, animi, eum atque quos explicabo quibusdam sint incidunt sit modi neque praesentium veritatis nihil voluptates. Voluptas illo atque aspernatur? Quos!'}
-                >
+                {!campaigns ? (
+                    <ActivityIndicator visible={isLoading} />
+
+                ) : (
                     <>
-                        <View style={styles.support}>
-                            <Text style={styles.supportText}>
-                                Número de apoiadores
-                            </Text>
-                            <Text style={styles.supportText}>
-                                200
-                            </Text>
-                        </View>
-                        <PrimaryButton
-                            title='Apoiar Campanhas'
-                            onPress={handleOnModalPress}
-                        />
-                    </>
-                </CampaignCard>
+                        <CampaignCard
+                            id={campaigns.id}
+                            name={campaigns.title}
+                            image={{ uri: campaigns.cover_image }}
+                            currentAmount={campaigns.amountReceived}
+                            goalAmount={campaigns.goalAmount}
+                            content={campaigns.description}
+                        >
+                            <>
+                                <View style={styles.support}>
+                                    <Text style={styles.supportText}>
+                                        Número de apoiadores
+                                    </Text>
+                                    <Text style={styles.supportText}>
+                                        {campaigns.numberOfSupport}
+                                    </Text>
+                                </View>
+                                <PrimaryButton
+                                    title='Apoiar Campanhas'
+                                    onPress={handleOnModalPress}
+                                />
+                            </>
+                        </CampaignCard>
 
-                <Text style={styles.title}>Imagens</Text>
+                        <Text style={styles.title}>Imagens</Text>
 
-                <ScrollView
-                    contentContainerStyle={styles.ImageContainer}
-                    horizontal={true}
-                >
-                    <Image
-                        style={styles.img}
-                        source={require('../../assets/onboarding01-min.jpg')}
-                    />
-                    <Image
-                        style={styles.img}
-                        source={require('../../assets/onboarding01-min.jpg')}
-                    />
-                </ScrollView>
+                        <ScrollView
+                            contentContainerStyle={styles.ImageContainer}
+                            horizontal={true}
+                        >
+                            {campaigns?.images?.map(image => (
+                                <Image
+                                    key={image}
+                                    style={styles.img}
+                                    source={{ uri: image }}
+                                />
+                            ))}
+
+                        </ScrollView></>
+                )}
 
             </ScrollView>
 
             <PaymentModal
+                navigation={navigation}
+                campaignId={id}
+                campaignName={campaigns.title}
                 handleClose={handleOnModalPress}
                 showModal={showModal}
             />

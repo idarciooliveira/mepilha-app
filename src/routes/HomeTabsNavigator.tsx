@@ -32,6 +32,7 @@ export default function HomeTabsNavigator() {
                     return <MaterialIcons name={iconName} size={size} color={color} />
                 },
                 tabBarActiveTintColor: colors.primary,
+                tabBarHideOnKeyboard: true,
                 tabBarItemStyle: {
                     backgroundColor: '#F3F4F9'
                 }
