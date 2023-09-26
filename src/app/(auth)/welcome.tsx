@@ -2,11 +2,11 @@ import { Text, Image, StyleSheet } from 'react-native'
 import OnBoarding from 'react-native-onboarding-swiper'
 import Screen from '../../components/screen'
 
-export default function Welcome() {
+export default function Welcome({ navigation }: any) {
     return (
         <Screen>
             <OnBoarding
-                onDone={() => { }}
+                onDone={() => navigation.navigate('signin')}
                 controlStatusBar={false}
                 containerStyles={{ flex: 1 }}
                 showSkip={false}

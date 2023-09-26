@@ -41,6 +41,7 @@ export default function HomeTabsNavigator() {
                 component={Home}
                 options={{
                     headerTitle: 'Pagina Inicial',
+                    tabBarLabel: 'Inicio'
                 }}
             />
             <Tabs.Screen
@@ -48,6 +49,7 @@ export default function HomeTabsNavigator() {
                 component={Dashboard}
                 options={{
                     headerTitle: 'Minhas Campanhas',
+                    tabBarLabel: 'Dashboard'
                 }}
             />
             <Tabs.Screen
@@ -55,6 +57,7 @@ export default function HomeTabsNavigator() {
                 component={Campaigns}
                 options={{
                     headerTitle: 'Campanhas',
+                    tabBarLabel: 'Campanhas'
                 }}
             />
             <Tabs.Screen
@@ -62,6 +65,7 @@ export default function HomeTabsNavigator() {
                 component={Settings}
                 options={{
                     headerTitle: 'Definições',
+                    tabBarLabel: 'Definições'
                 }}
             />
         </Tabs.Navigator>

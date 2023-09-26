@@ -5,13 +5,13 @@ import Screen from '../../components/screen'
 import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
 
-export default function Signin() {
+export default function Signin({ navigation }: any) {
 
     async function handleOnSignIn() {
-
+        navigation.navigate('hometabs')
     }
     async function handleCreateNewAccount() {
-
+        navigation.navigate('register')
     }
 
     return (

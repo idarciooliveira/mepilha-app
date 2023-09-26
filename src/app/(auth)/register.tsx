@@ -11,11 +11,11 @@ import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
 import Screen from '../../components/screen'
 
-export default function Register() {
+export default function Register({ navigation }: any) {
 
     async function handleOnCreateNewAccount() { }
     async function handleOnSignIn() {
-
+        navigation.goBack()
     }
 
     return (
