@@ -9,6 +9,11 @@ const login = async (email: string, password: string) =>
         email, password
     })
 
+
+const register = async (data: any) => {
+    return await apiClient.post<any>('/auth/register', data)
+}
 export default {
     login,
+    register
 }

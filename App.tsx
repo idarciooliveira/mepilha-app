@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import authStorage from './src/config/storage'
 import Localstorage from './src/config/local-storage'
 import { SWRConfig } from "swr";
+import Toast from 'react-native-toast-message';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -60,6 +61,7 @@ export default function App() {
       <NavigationContainer>
         <StatusBar backgroundColor={colors.background} />
         <AppNavigator firstLaunch={firstLaunch} />
+        <Toast />
       </NavigationContainer>
     </SWRConfig>
   );

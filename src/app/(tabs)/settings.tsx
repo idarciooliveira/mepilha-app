@@ -4,23 +4,29 @@ import Screen from '../../components/screen'
 import { colors } from '../../config/colors'
 import Separator from '../../components/separator'
 import SettingItem from '../../components/setting-item'
+import { useAuth } from '../../hooks/useAuth'
 
-export default function Settings() {
+export default function Settings({ navigation }: any) {
+
+    const { user, logout } = useAuth()
+
     return (
         <Screen>
             <View style={styles.profile}>
                 <Text style={styles.text}>IO</Text>
             </View>
             <Text style={styles.userName}>
-                Idarcio Oliveira
+                {user?.name}
             </Text>
 
             <Separator />
-            <SettingItem title='Meus dados' />
-            <Separator />
-            <SettingItem title='Reclamação e denúncias' />
-            <Separator />
-            <SettingItem title='Terminar Sessão' />
+            <SettingItem
+                title='Terminar Sessão'
+                onPress={() => {
+                    logout()
+                    navigation.replace('signin')
+                }}
+            />
             <Separator />
         </Screen>
     )

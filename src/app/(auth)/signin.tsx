@@ -1,35 +1,88 @@
 
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Keyboard } from 'react-native'
 import { colors } from '../../config/colors'
 import Screen from '../../components/screen'
 import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
+import { useForm, Controller } from 'react-hook-form'
+import ActivityIndicator from '../../components/activity-indicator'
+import { useAuth } from '../../hooks/useAuth'
+import { useState } from 'react'
+import authApi from '../../services/auth'
+import notify from '../../config/notify'
+
+type FormData = {
+    email: string
+    password: string
+}
 
 export default function Signin({ navigation }: any) {
 
-    async function handleOnSignIn() {
-        navigation.navigate('hometabs')
-    }
+    const { login } = useAuth()
+    const [loading, setLoading] = useState(false)
+    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
+
+
     async function handleCreateNewAccount() {
         navigation.navigate('register')
     }
 
+    const onSubmit = async ({ email, password }: FormData) => {
+        try {
+            Keyboard.dismiss()
+            setLoading(true)
+            const response = await authApi.login(email, password)
+            setLoading(false)
+
+            if (!response.ok) return notify.Error({ message: 'Email ou Senha Incorreta' })
+
+            const access_token = response.data?.access_token ?? ''
+            reset()
+            login(access_token)
+
+            navigation.replace('hometabs')
+        } catch (error) {
+            setLoading(false)
+        }
+    }
+
     return (
         <Screen styles={styles.container}>
+            <ActivityIndicator visible={loading} />
             <Text style={styles.title}>Bem vindo ao MePilha</Text>
             <Text style={styles.subtitle}>
                 A sua plataforma de financiamento colectivo
             </Text>
 
             <Text style={styles.label}>E-mail</Text>
-            <InputText keyboardType='email-address' autoCapitalize='none' />
+
+            <Controller control={control} rules={{ required: true }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <InputText
+                        value={value}
+                        keyboardType='email-address'
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+
+                    />
+                )} name='email' />
 
             <Text style={styles.label}>Password</Text>
-            <InputText secureTextEntry={true} />
+
+            <Controller control={control} rules={{ required: true }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                    <InputText
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        secureTextEntry={true}
+
+                    />
+                )} name='password' />
 
             <View style={{ marginTop: 20 }} />
 
-            <PrimaryButton title='Entrar' onPress={handleOnSignIn} />
+            <PrimaryButton title='Entrar' onPress={handleSubmit(onSubmit)} />
 
             <View style={{ marginTop: 20 }} />
 
