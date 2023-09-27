@@ -39,7 +39,6 @@ export default function PaymentModal({
 
     async function handleOnSubmit({ amount }: FormData) {
         try {
-            console.log('pressed!')
             Keyboard.dismiss()
             setLoading(true)
             const response = await transaction.createTransaction({

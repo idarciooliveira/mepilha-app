@@ -1,4 +1,4 @@
-import { apiClient } from './client'
+import { apiClient, fetcher } from './client'
 import useSWRNative from '@nandorojo/swr-react-native'
 const endpont = '/payments'
 
@@ -19,7 +19,7 @@ const createTransaction = async (data: CreateTransaction) => {
 
 const getUserTotalGained = (id: string) => {
     // @ts-ignore
-    const { error, isLoading, data, mutate } = useSWRNative<number>(`${endpont}/users/${id}`, fetch)
+    const { error, isLoading, data, mutate } = useSWRNative<number>(`${endpont}/users/${id}`, fetcher)
 
 
     return {

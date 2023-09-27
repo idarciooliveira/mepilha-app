@@ -10,38 +10,42 @@ export default function Sucess({ route, navigation }: any) {
     const { name, amount, campaignName } = route.params
 
     return (
-        <Screen styles={styles.container}>
-            <Image
-                style={styles.img}
-                source={require('../../assets/sucess.png')}
-            />
-            <Text style={styles.text}>
-                {name} ! você apoiou a campanha com
-            </Text>
-
-            <Text style={styles.text}>
-                {amount} AOA
-            </Text>
-
-            <View style={styles.buttonContainer}>
-                <Text style={styles.buttonText}>
-                    {campaignName}
+        <Screen>
+            <View style={styles.container}>
+                <Image
+                    style={styles.img}
+                    source={require('../../assets/sucess.png')}
+                />
+                <Text style={styles.text}>
+                    {name} ! você apoiou a campanha com
                 </Text>
-            </View>
 
-            <PrimaryButton
-                title='CONTINUAR'
-                onPress={() => navigation.replace('hometabs')}
-            />
+                <Text style={styles.text}>
+                    {amount} AOA
+                </Text>
+
+                <View style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>
+                        {campaignName}
+                    </Text>
+                </View>
+
+                <PrimaryButton
+                    title='CONTINUAR'
+                    onPress={() => navigation.replace('hometabs')}
+                />
+            </View>
         </Screen>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 40
+
     },
     img: {
         width: 80,

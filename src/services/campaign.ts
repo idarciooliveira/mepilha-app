@@ -1,9 +1,7 @@
-import { apiClient } from './client'
+import { apiClient, fetcher } from './client'
 import useSWRNative from '@nandorojo/swr-react-native'
 
 const endpont = '/campaigns'
-
-const fetch = () => apiClient.get<any>(endpont).then(data => data.data)
 
 export type CampaignProps = {
     id: string
@@ -15,7 +13,7 @@ export type CampaignProps = {
 }
 
 const getCampaigns = () => {
-    const { error, isLoading, data, mutate } = useSWRNative<CampaignProps[]>(endpont, fetch)
+    const { error, isLoading, data, mutate } = useSWRNative<CampaignProps[]>(endpont, fetcher)
 
     return {
         campaigns: data,
@@ -26,7 +24,7 @@ const getCampaigns = () => {
 }
 
 const getUserCampaigns = (id: string) => {
-    const { error, isLoading, data, mutate } = useSWRNative<CampaignProps[]>(`${endpont}/users/${id}`, fetch)
+    const { error, isLoading, data, mutate } = useSWRNative<CampaignProps[]>(`${endpont}/users/${id}`, fetcher)
 
     return {
         campaigns: data,
@@ -46,7 +44,6 @@ export type CreateCampaign = {
 }
 
 async function createCampaign(data: CreateCampaign) {
-    console.log(data.title)
     const formData = new FormData()
 
     formData.append('title', data.title)
@@ -93,12 +90,11 @@ export type CampaignDetail = {
 
 const getCampaignById = (id: string) => {
     // @ts-ignore
-    const { error, isLoading, data, mutate } = useSWRNative<CampaignDetail[]>(`${endpont}/${id}`, fetch)
-
+    const { error, isLoading, data, mutate } = useSWRNative<CampaignDetail>(`${endpont}/${id}`, fetcher)
 
     return {
         //@ts-ignore
-        campaigns: data ? data[0] : null,
+        campaigns: data,
         error,
         isLoading,
         mutate

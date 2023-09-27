@@ -84,8 +84,6 @@ export default function NewCampaign({ navigation }: any) {
                 userId: user?.id ?? ''
             })
 
-            console.log(response.data)
-
             setLoading(false)
 
             if (!response.ok)
@@ -112,15 +110,17 @@ export default function NewCampaign({ navigation }: any) {
 
     return (
         <Screen>
+            <ActivityIndicator visible={loading} />
             <Header
                 title='Criar Nova Campanha'
                 handleGoBack={() => navigation.goBack()}
             />
-            <ActivityIndicator visible={loading} />
+
             <ScrollView
                 contentContainerStyle={styles.container}
                 showsVerticalScrollIndicator={false}
             >
+
                 <Text style={styles.subtitle}>
                     Adicione os dados importantes, imagens e o conceito a ser informado
                 </Text>
@@ -181,13 +181,13 @@ export default function NewCampaign({ navigation }: any) {
                     <Text style={{ color: 'white' }}>Selecione a até 3 imagens da campanha</Text>
                 </TouchableOpacity>
 
-                <PrimaryButton title='Criar conta' onPress={handleSubmit(handleOnCreateNewAccount)} />
+                <PrimaryButton title='Criar Campanha' onPress={handleSubmit(handleOnCreateNewAccount)} />
 
                 <TouchableOpacity
                     style={{
                         alignItems: 'center',
                         marginTop: 8
-                    }} >
+                    }} onPress={() => navigation.goBack()}>
                     <Text style={styles.label}>
                         Cancelar
                     </Text>
