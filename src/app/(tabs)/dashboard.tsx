@@ -32,9 +32,9 @@ export default function Dashboard({ navigation }: any) {
 
     return (
         <>
+            <ActivityIndicator visible={isLoading} />
             <ScrollView style={styles.container}>
                 <CampaignOverviewCard />
-                <ActivityIndicator visible={isLoading} />
                 {campaigns && campaigns.length > 0 && campaigns.map(campaign => (
                     <CampaignCard
                         key={campaign.id}

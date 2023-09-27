@@ -10,6 +10,7 @@ import authStorage from './src/config/storage'
 import Localstorage from './src/config/local-storage'
 import { SWRConfig } from "swr";
 import Toast from 'react-native-toast-message';
+import AuthNavigator from "./src/routes/AuthNavigator";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,7 +21,7 @@ export default function App() {
 
   const [firstLaunch, setFirstLaunch] = useAtom(appLaunchAtom)
   const [isReady, setIsReady] = useAtom(isAppReadyAtom)
-  const [, setUser] = useAtom(userAtom)
+  const [user, setUser] = useAtom(userAtom)
 
   const restoreUser = async () => {
     const user = await authStorage.getUser()
@@ -59,8 +60,8 @@ export default function App() {
       focusThrottleInterval: 5000
     }}>
       <NavigationContainer>
-        <StatusBar backgroundColor={colors.background} />
-        <AppNavigator firstLaunch={firstLaunch} />
+        <StatusBar style="dark" translucent />
+        {user ? <AppNavigator /> : <AuthNavigator firstLaunch={firstLaunch} />}
         <Toast />
       </NavigationContainer>
     </SWRConfig>

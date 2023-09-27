@@ -14,7 +14,7 @@ export default function CampaignDetail({ route, navigation }: any) {
 
     const { id } = route.params
 
-    const { campaigns, isLoading, error } = campaign.getCampaignById(id)
+    const { campaigns, isLoading, error } = campaign.getCampaignById(id ?? '')
 
     const [showModal, setShowModal] = useState(false)
 
@@ -37,12 +37,12 @@ export default function CampaignDetail({ route, navigation }: any) {
                 ) : (
                     <>
                         <CampaignCard
-                            id={campaigns.id}
-                            name={campaigns.title}
-                            image={{ uri: campaigns.cover_image }}
-                            currentAmount={campaigns.amountReceived}
-                            goalAmount={campaigns.goalAmount}
-                            content={campaigns.description}
+                            id={campaigns?.id}
+                            name={campaigns?.title}
+                            image={{ uri: campaigns?.cover_image }}
+                            currentAmount={campaigns?.amountReceived}
+                            goalAmount={campaigns?.goalAmount}
+                            content={campaigns?.description}
                         >
                             <>
                                 <View style={styles.support}>
@@ -82,7 +82,7 @@ export default function CampaignDetail({ route, navigation }: any) {
             <PaymentModal
                 navigation={navigation}
                 campaignId={id}
-                campaignName={campaigns.title}
+                campaignName={campaigns?.title ?? ''}
                 handleClose={handleOnModalPress}
                 showModal={showModal}
             />

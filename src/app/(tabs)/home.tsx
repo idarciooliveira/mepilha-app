@@ -12,22 +12,24 @@ export default function Home({ navigation }: any) {
     if (error) return (<Text>Ocoreu um erro de internet</Text>)
 
     return (
-        <ScrollView style={styles.container}>
+        <>
             <ActivityIndicator visible={isLoading} />
-            {campaigns && campaigns.length > 0 && campaigns.map(campaign => (
-                <CampaignCard
-                    key={campaign.id}
-                    id={campaign.id}
-                    name={campaign.title}
-                    image={{ uri: campaign.cover_image }}
-                    currentAmount={campaign.amountReceived}
-                    goalAmount={campaign.goalAmount}
-                    onPress={() => navigation.navigate(`campaignDetail`, {
-                        id: campaign.id
-                    })}
-                />
-            ))}
-        </ScrollView>
+            <ScrollView style={styles.container}>
+                {campaigns && campaigns.length > 0 && campaigns.map(campaign => (
+                    <CampaignCard
+                        key={campaign.id}
+                        id={campaign.id}
+                        name={campaign.title}
+                        image={{ uri: campaign.cover_image }}
+                        currentAmount={campaign.amountReceived}
+                        goalAmount={campaign.goalAmount}
+                        onPress={() => navigation.navigate(`campaignDetail`, {
+                            id: campaign.id
+                        })}
+                    />
+                ))}
+            </ScrollView>
+        </>
     )
 }
 

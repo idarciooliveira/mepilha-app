@@ -2,6 +2,7 @@ import { create } from "apisauce";
 import authStorage from "../config/storage";
 
 const apiClient = create({
+    // baseURL: 'http://172.30.113.21:3333/api/v1'
     baseURL: 'https://mepilha-api.onrender.com/api/v1'
 })
 

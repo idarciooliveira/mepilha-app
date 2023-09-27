@@ -3,6 +3,7 @@ import {
     View,
     ScrollView,
     StyleSheet,
+    Image,
     TouchableOpacity
 } from 'react-native'
 
@@ -11,17 +12,111 @@ import Screen from '../../components/screen'
 import InputText from '../../components/inputs/input-text'
 import PrimaryButton from '../../components/primary-button'
 import Header from '../../components/header'
+import { useAuth } from '../../hooks/useAuth'
+import { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import * as ImagePicker from 'expo-image-picker';
+import notify from '../../config/notify'
+import campaign from '../../services/campaign'
+import ActivityIndicator from '../../components/activity-indicator'
 
-export default function NewCampaign() {
+type Inputs = {
+    title: string
+    description: string
+    goalAmount: string
+}
 
-    async function handleOnCreateNewAccount() { }
+export default function NewCampaign({ navigation }: any) {
+
+    const { user } = useAuth()
+    const [loading, setLoading] = useState(false)
+    const { control, handleSubmit, formState: { errors }, reset } = useForm<Inputs>();
+    const [coverImage, setCoverImage] = useState('');
+    const [images, setImages] = useState<string[]>([]);
+
+    const pickCoverImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+
+        if (!result.canceled) {
+            setCoverImage(result.assets[0].uri);
+        }
+    };
+
+    const pickImages = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
+            allowsMultipleSelection: true
+        });
+
+        if (!result.canceled) {
+            let newImages: string[] = []
+
+            for (const image of result.assets) {
+                newImages.push(image.uri)
+            }
+
+            setImages([
+                ...newImages
+            ]);
+
+        }
+    };
+
+    async function handleOnCreateNewAccount({ title, description, goalAmount }: Inputs) {
+        try {
+            setLoading(true)
+
+            const response = await campaign.createCampaign({
+                cover: coverImage,
+                description,
+                title,
+                goalAmount,
+                images,
+                userId: user?.id ?? ''
+            })
+
+            console.log(response.data)
+
+            setLoading(false)
+
+            if (!response.ok)
+                return notify.Error({
+                    message: 'Ocorreu um erro!, verifique a sua internet'
+                })
+
+            reset()
+            setImages([])
+            setCoverImage('')
+            navigation.navigate('hometabs')
+
+            notify.Sucess({
+                message: 'A sua campanha foi criada com sucesso!'
+            })
+
+        } catch (error) {
+            setLoading(false)
+            notify.Error({
+                message: 'Ocorreu um erro!'
+            })
+        }
+    }
 
     return (
         <Screen>
             <Header
                 title='Criar Nova Campanha'
-                handleGoBack={() => { }}
+                handleGoBack={() => navigation.goBack()}
             />
+            <ActivityIndicator visible={loading} />
             <ScrollView
                 contentContainerStyle={styles.container}
                 showsVerticalScrollIndicator={false}
@@ -31,25 +126,62 @@ export default function NewCampaign() {
                 </Text>
 
                 <Text style={styles.label}>Nome da Campanha</Text>
-                <InputText />
+                <Controller control={control} rules={{ required: true }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <InputText
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
 
-                <Text style={styles.label}>Categoria</Text>
-                <InputText />
+                        />
+                    )} name='title' />
+
+
 
                 <Text style={styles.label}>
                     Descreva a sua campanha (sua história, motivação e desafios).
                 </Text>
-                <InputText />
+
+                <Controller control={control} rules={{ required: true }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <InputText
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+
+                        />
+                    )} name='description' />
+
 
                 <Text style={styles.label}>Meta de financiamento</Text>
-                <InputText />
 
-                <Text style={styles.label}>Quando termina a campanha ?</Text>
-                <InputText />
+                <Controller control={control} rules={{ required: true }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <InputText
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+
+                        />
+                    )} name='goalAmount' />
 
                 <View style={{ marginTop: 20 }} />
 
-                <PrimaryButton title='Criar conta' onPress={handleOnCreateNewAccount} />
+                {coverImage && <Image source={{ uri: coverImage }} style={styles.img} />}
+
+                <TouchableOpacity
+                    onPress={pickCoverImage}
+                    style={styles.pickImageButton}>
+                    <Text style={{ color: 'white' }}>Selecione a imagem de capa</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={pickImages}
+                    style={styles.pickImageButton}>
+                    <Text style={{ color: 'white' }}>Selecione a até 3 imagens da campanha</Text>
+                </TouchableOpacity>
+
+                <PrimaryButton title='Criar conta' onPress={handleSubmit(handleOnCreateNewAccount)} />
 
                 <TouchableOpacity
                     style={{
@@ -92,5 +224,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 8,
         marginTop: 11
+    },
+    pickImageButton: {
+        backgroundColor: 'blue',
+        height: 40,
+        padding: 8,
+        marginBottom: 12,
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    img: {
+        width: '100%',
+        height: 100,
+        marginBottom: 12,
+        borderRadius: 10
     }
 })

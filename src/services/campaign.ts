@@ -36,6 +36,49 @@ const getUserCampaigns = (id: string) => {
     }
 }
 
+export type CreateCampaign = {
+    title: string
+    description: string
+    cover: string
+    images: string[]
+    goalAmount: string
+    userId: string
+}
+
+async function createCampaign(data: CreateCampaign) {
+    console.log(data.title)
+    const formData = new FormData()
+
+    formData.append('title', data.title)
+    formData.append('description', data.description)
+    formData.append('goalAmount', data.goalAmount)
+    formData.append('categoryId', 'cb7502f7-6073-4afa-a813-90a899cfe75f')
+    formData.append('userId', data.userId)
+    formData.append('endAt', '2023-09-26T21:57:34.810Z')
+
+    // @ts-ignore
+    formData.append('cover', {
+        uri: data.cover,
+        name: 'image',
+        type: 'image/jpeg'
+    })
+
+    data.images.forEach(img => {
+        // @ts-ignore
+        formData.append('files', {
+            uri: img,
+            name: 'image',
+            type: 'image/jpeg'
+        })
+    })
+
+    return await apiClient.post(endpont, formData, {
+        headers: {
+            "Content-Type": 'multipart/form-data'
+        }
+    })
+
+}
 
 export type CampaignDetail = {
     id: string
@@ -55,7 +98,7 @@ const getCampaignById = (id: string) => {
 
     return {
         //@ts-ignore
-        campaigns: data[0],
+        campaigns: data ? data[0] : null,
         error,
         isLoading,
         mutate
@@ -66,5 +109,6 @@ const getCampaignById = (id: string) => {
 export default {
     getCampaigns,
     getCampaignById,
-    getUserCampaigns
+    getUserCampaigns,
+    createCampaign
 }

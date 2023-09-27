@@ -40,73 +40,74 @@ export default function Signin({ navigation }: any) {
             reset()
             login(access_token)
 
-            navigation.replace('hometabs')
         } catch (error) {
             setLoading(false)
         }
     }
 
     return (
-        <Screen styles={styles.container}>
+        <>
             <ActivityIndicator visible={loading} />
-            <Text style={styles.title}>Bem vindo ao MePilha</Text>
-            <Text style={styles.subtitle}>
-                A sua plataforma de financiamento colectivo
-            </Text>
-
-            <Text style={styles.label}>E-mail</Text>
-
-            <Controller control={control} rules={{ required: true }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <InputText
-                        value={value}
-                        keyboardType='email-address'
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-
-                    />
-                )} name='email' />
-
-            <Text style={styles.label}>Password</Text>
-
-            <Controller control={control} rules={{ required: true }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                    <InputText
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        secureTextEntry={true}
-
-                    />
-                )} name='password' />
-
-            <View style={{ marginTop: 20 }} />
-
-            <PrimaryButton title='Entrar' onPress={handleSubmit(onSubmit)} />
-
-            <View style={{ marginTop: 20 }} />
-
-            <TouchableOpacity onPress={handleCreateNewAccount}>
-                <Text style={styles.link}>
-                    Não tem uma conta ?
-                    <Text style={{ color: colors.primary }}> Criar uma conta</Text>
+            <Screen styles={styles.container}>
+                <Text style={styles.title}>Bem vindo ao MePilha</Text>
+                <Text style={styles.subtitle}>
+                    A sua plataforma de financiamento colectivo
                 </Text>
-            </TouchableOpacity>
-        </Screen>
+
+                <Text style={styles.label}>E-mail</Text>
+
+                <Controller control={control} rules={{ required: true }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <InputText
+                            value={value}
+                            keyboardType='email-address'
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+
+                        />
+                    )} name='email' />
+
+                <Text style={styles.label}>Password</Text>
+
+                <Controller control={control} rules={{ required: true }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <InputText
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            secureTextEntry={true}
+
+                        />
+                    )} name='password' />
+
+                <View style={{ marginTop: 20 }} />
+
+                <PrimaryButton title='Entrar' onPress={handleSubmit(onSubmit)} />
+
+                <View style={{ marginTop: 20 }} />
+
+                <TouchableOpacity onPress={handleCreateNewAccount}>
+                    <Text style={styles.link}>
+                        Não tem uma conta ?
+                        <Text style={{ color: colors.primary }}> Criar uma conta</Text>
+                    </Text>
+                </TouchableOpacity>
+            </Screen>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 20,
-        marginTop: 30
+        marginTop: 30,
     },
     title: {
         textAlign: 'center',
         fontSize: 20,
         fontWeight: '500',
         color: colors.title,
-        marginBottom: 8
+        marginBottom: 8,
     },
     subtitle: {
         textAlign: 'center',

@@ -24,7 +24,6 @@ export default function Settings({ navigation }: any) {
                 title='Terminar Sessão'
                 onPress={() => {
                     logout()
-                    navigation.replace('signin')
                 }}
             />
             <Separator />

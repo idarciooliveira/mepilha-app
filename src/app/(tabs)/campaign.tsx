@@ -22,28 +22,30 @@ export default function Campaigns({ navigation }: any) {
     if (error) return (<Text>Ocoreu um erro de internet</Text>)
 
     return (
-        <ScrollView style={styles.container}>
+        <>
             <ActivityIndicator visible={isLoading} />
-            <InputText
-                value={query}
-                onChangeText={(text) => setQuery(text)}
-                placeholder='Pesquisar campanha'
-            />
-
-            {result && result.length > 0 && result.map(campaign => (
-                <CampaignCard
-                    key={campaign.id}
-                    id={campaign.id}
-                    name={campaign.title}
-                    image={{ uri: campaign.cover_image }}
-                    currentAmount={campaign.amountReceived}
-                    goalAmount={campaign.goalAmount}
-                    onPress={() => navigation.navigate(`campaignDetail`, {
-                        id: campaign.id
-                    })}
+            <ScrollView style={styles.container}>
+                <InputText
+                    value={query}
+                    onChangeText={(text) => setQuery(text)}
+                    placeholder='Pesquisar campanha'
                 />
-            ))}
-        </ScrollView>
+
+                {result && result.length > 0 && result.map(campaign => (
+                    <CampaignCard
+                        key={campaign.id}
+                        id={campaign.id}
+                        name={campaign.title}
+                        image={{ uri: campaign.cover_image }}
+                        currentAmount={campaign.amountReceived}
+                        goalAmount={campaign.goalAmount}
+                        onPress={() => navigation.navigate(`campaignDetail`, {
+                            id: campaign.id
+                        })}
+                    />
+                ))}
+            </ScrollView>
+        </>
     )
 }
 
